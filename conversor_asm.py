@@ -61,7 +61,21 @@ def convert_file():
     except Exception as e:
         messagebox.showerror("Error", f"Error en conversión:\n{str(e)}")
 
-# Resto de la interfaz gráfica (igual que antes)
+def seleccionar_archivo():
+    ruta = filedialog.askopenfilename(
+        filetypes=[("Archivos ASM", "*.asm"), ("Todos los archivos", "*.*")]
+    )
+    if ruta:
+        entry_path.delete(0, tk.END)
+        entry_path.insert(0, ruta)
+        try:
+            with open(ruta, "r") as f:
+                contenido = f.read()
+                text_area.delete("1.0", tk.END)
+                text_area.insert(tk.END, contenido)
+        except Exception as e:
+            messagebox.showerror("Error", f"No se pudo leer el archivo:\n{str(e)}")
+
 root = tk.Tk()
 root.title("Conversor ASM a Binario - ")
 
