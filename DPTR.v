@@ -15,34 +15,35 @@ wire [31:0] r6;				//Dato entrada 2 demux y salida 1 buffer 1
 wire [31:0] r7;				//Dato entrada 1 demux y dato de lectura.
 
 
-BR 	inst_BR(.adrsReadA(instruccion[25:21]), .adrsReadB(instruccion[20:16]), .adrsWrite(instruccion[15:11]), .RegEn(out_control[5]), .write(r1), .readA(r2), .readB(r3));
+BR 	inst_BR(.adrsReadA(instruccion_TR[25:21]), .adrsReadB(instruccion_TR[20:16]), .adrsWrite(instruccion_TR[15:11]), .RegEn(out_control[5]), .write(r1), .readA(r2), .readB(r3));
 DataMem inst_memoria(.address(r5), .MemToWrite(out_control[1]), .dataWrite(r3), .dataRead(r7));
 ALU  inst_ALU(.A(r2), .B(r3), .Sel(r4), .R(r5));
 multiplexor inst_mux(.A_mux(r7), .B_mux(r5), .mux_sel(out_control[0]), .salida_mux(r1));
-Unidad_control inst_control(.OPcode(instruccion[26:31]), .salida_control(out_control));
-ALU_control	inst_AluControl(.op(instruccion[5:0]), .Op_in(out_control[4:2]), .Op_out(r4));
+Unidad_control inst_control(.OPcode(instruccion_TR[31:26]), .salida_control(out_control));
+ALU_control	inst_AluControl(.op(instruccion_TR[5:0]), .Op_in(out_control[4:2]), .Op_out(r4));
 endmodule
 
 module DPTR_TB();
 
 reg   [31:0]instruccion;
+reg clk;
 
-DPTR_TB inst_TB(.instruccion(instruccion));
+DPTR uut(.instruccion_TR(instruccion));
 
 //Banco de pruebas.
-//El conjunto de instrucciones está distribuido de la siguiente manera:
-//Para instrucciones tipo R:
-//32-26 OPcode (000000 en instrucciones tipo R)
+//El conjunto de instruccion_TRes está distribuido de la siguiente manera:
+//Para instruccion_TRes tipo R:
+//32-26 OPcode (000000 en instruccion_TRes tipo R)
 //21-25 Registro s (rs)
 //16-20 Registro t (rt)
 //11-15	Registro destino (resultado)
-//6-10	Shamt (no se usa en instrucciones tipo R)
+//6-10	Shamt (no se usa en instruccion_TRes tipo R)
 //0-5	Function
 
 initial
 	begin
 		clk=0;
-		$readmemb("datos.txt", inst_TB.instancia_BR.BR_in);
+		$readmemb("datos.txt", uut.inst_BR.BR_in);
 		instruccion = 32'b000000_00000_00001_00010_00000_100000;			//Suma aritmética: $0 $1 $3
 		#100;
 		$stop;
