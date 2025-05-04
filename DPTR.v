@@ -1,6 +1,7 @@
 `timescale 1ns/1ns
 
 module DPTR(
+	input clk,
 	input   [31:0]instruccion_TR
 );
 
@@ -15,7 +16,7 @@ wire [31:0] r6;				//Dato entrada 2 demux y salida 1 buffer 1
 wire [31:0] r7;				//Dato entrada 1 demux y dato de lectura.
 
 
-BR 	inst_BR(.adrsReadA(instruccion_TR[25:21]), .adrsReadB(instruccion_TR[20:16]), .adrsWrite(instruccion_TR[15:11]), .RegEn(out_control[5]), .write(r1), .readA(r2), .readB(r3));
+BR 	inst_BR(.clk(clk), .adrsReadA(instruccion_TR[25:21]), .adrsReadB(instruccion_TR[20:16]), .adrsWrite(instruccion_TR[15:11]), .RegEn(out_control[5]), .write(r1), .readA(r2), .readB(r3));
 DataMem inst_memoria(.address(r5), .MemToWrite(out_control[1]), .dataWrite(r3), .dataRead(r7));
 ALU  inst_ALU(.A(r2), .B(r3), .Sel(r4), .R(r5));
 multiplexor inst_mux(.A_mux(r7), .B_mux(r5), .mux_sel(out_control[0]), .salida_mux(r1));
