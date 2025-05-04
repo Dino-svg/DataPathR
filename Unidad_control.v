@@ -1,21 +1,20 @@
 module Unidad_control(
-    input wire [5:0]  OPcode,
-    output reg [5:0]  salida_control
+    input wire [5:0] OPcode,
+    output reg [5:0] salida_control
 );
 
-//Salida control bits:
-//5      RegWrite -> BR
-//4 3 2  ALUcontrol
-//1		 MemToWrite -> MemDatos
-//0		 MemToReg	-> Multiplexor
+// Bit 5: RegWrite (1 para Tipo R)
+// Bits 4-2: ALUop (010 para Tipo R)
+// Bit 1: MemToWrite (0 para Tipo R)
+// Bit 0: MemToReg (1 para Tipo R, resultado de ALU)
+always @(*) begin
+    case (OPcode)
+        6'b000000: salida_control = 6'b1_010_0_1;  // Instrucciones Tipo R
+        default:   salida_control = 6'b0_000_0_0;  // Default seguro
+    endcase
+end
 
-always@(*) 
-	begin
-		case (OPcode)
-			6'b000000:  salida_control = 6'b1_010_0_1;		// Opcode de instrucciones tipo R
-			default: salida_control = 3'd0;       			// Por defecto, salida en 0
-		endcase
-	end
 endmodule
+
 
 
