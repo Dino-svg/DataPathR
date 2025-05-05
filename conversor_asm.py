@@ -2,7 +2,6 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
-# Mapeo completo según tu arquitectura
 inst_map = {
     # Formato: OPCODE (6b) | rs (5b) | rt (5b) | rd (5b) | shamt (5b) | funct (6b)
     "ADD": {"opcode": "000000", "funct": "100000", "type": "R"},
