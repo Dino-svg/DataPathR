@@ -21,4 +21,3 @@ always@(*)
 		endcase
 	end
 endmodule
-
