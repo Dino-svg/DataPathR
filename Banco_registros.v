@@ -11,21 +11,28 @@ module BR(
     output reg [31:0] readB
 );
 
-reg [31:0] BR_in[0:31];
+reg [31:0] BR_in [0:31];
+
+integer i;  // Declaración de variable de iteración
 
 initial begin
-    BR_in[0] = 32'd0;    // $zero
-    BR_in[5] = 32'd20;   // $5 = 20
-    BR_in[6] = 32'd12;   // $6 = 12
-    BR_in[7] = 32'd55;   // $7 = 55
-    BR_in[8] = 32'd72;   // $8 = 72
-    BR_in[9] = 32'd100;  // $9 = 100
-    BR_in[15] = 32'd999; // $15 = 999
- 
-    for (int i = 10; i <= 14; i++) begin
+    // Inicialización de registros específicos
+    BR_in[0]  = 32'd0;    // $zero
+    BR_in[5]  = 32'd20;   // $5 = 20
+    BR_in[6]  = 32'd12;   // $6 = 12
+    BR_in[7]  = 32'd55;   // $7 = 55
+    BR_in[8]  = 32'd72;   // $8 = 72
+    BR_in[9]  = 32'd100;  // $9 = 100
+    BR_in[15] = 32'd999;  // $15 = 999
+    
+    // Inicialización del resto de registros a 0 (sintaxis Verilog estándar)
+    for (i = 1; i <= 4; i = i + 1) begin
         BR_in[i] = 32'd0;
     end
-    for (int i = 16; i <= 31; i++) begin
+    for (i = 10; i <= 14; i = i + 1) begin
+        BR_in[i] = 32'd0;
+    end
+    for (i = 16; i <= 31; i = i + 1) begin
         BR_in[i] = 32'd0;
     end
 end
