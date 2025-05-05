@@ -6,7 +6,9 @@ module memoryInst(
 reg [7:0]memory[999:0];
 
 initial begin  
-$readmemb("datos.txt", memory);  
+$readmemb("datos.txt", memory); 
+$display("[MemI] Instrucciones cargadas. Primera instrucción: %h", 
+             {memory[0], memory[1], memory[2], memory[3]}); 
 end  
 
 always @(*) begin
