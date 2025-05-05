@@ -25,7 +25,6 @@ initial begin
     BR_in[9]  = 32'd100;  // $9 = 100
     BR_in[15] = 32'd999;  // $15 = 999
     
-    // Inicialización del resto de registros a 0 (sintaxis Verilog estándar)
     for (i = 1; i <= 4; i = i + 1) begin
         BR_in[i] = 32'd0;
     end
